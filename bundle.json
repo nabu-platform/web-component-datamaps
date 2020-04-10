@@ -1,0 +1,28 @@
+{
+	"name": "web-component-datamaps",
+	"description": "We assume d3 is already loaded as the data component library (which this depends on) loads v5 by default",
+	"resources": {
+		"images": {
+			"components": {
+				"datamaps-logo.png": {
+					"url": "datamaps-logo.png"
+				}
+			}
+		},
+		"topojson.v1.min.js": {
+			"url": "topojson-client-v1.8.0.min.js"
+		},
+		"datamaps-core.js": {
+			"url": "datamaps-core.js"
+		},
+		"datamaps.scss": {
+			"url": "datamaps.scss"
+		}, 
+		"datamaps.js": {
+			"url": "datamaps.js"
+		}, 
+		"datamaps.tpl": {
+			"url": "datamaps.tpl"
+		}
+	}
+}
