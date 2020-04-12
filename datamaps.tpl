@@ -16,7 +16,7 @@
 
 			<n-collapsible slot="settings" title="Chart Content" class="padded">
 				<n-form-text v-model="cell.state.countryLabel" label="Country Label Field" @input="draw" :timeout="600"/>
-				<n-form-text v-model="cell.state.bubbleLabel" label="Bubble Label Field" @input="draw" :timeout="600"/>				
+				<n-form-text v-model="cell.state.bubbleLabel" label="Bubble Label Field" @input="draw" :timeout="600"/>
 				
 				<n-form-switch v-model="cell.state.zoomable" label="Zoomable" @input="draw"/>
 				
@@ -41,6 +41,7 @@
 				<div v-for="i in Object.keys(cell.state.fills)" class="list-row">
 					<n-form-text v-model="cell.state.fills[i].name" label="Name" @input="draw" :timeout="600"/>
 					<n-form-text type="color" v-model="cell.state.fills[i].color" label="Color" @input="draw" :timeout="600"/>
+					<n-form-text v-model="cell.state.fills[i].maxPercent" label="Maximum Percent Threshold" @input="draw" :timeout="600"/>
 					<span class="fa fa-times" @click="cell.state.fills.splice(i, 1); draw()"></span>
 				</div>
 			</n-collapsible>
@@ -58,4 +59,5 @@
 			:updatable="true"/>
 	</div>
 </template>
+
 

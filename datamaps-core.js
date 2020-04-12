@@ -24,6 +24,7 @@ window.addEventListener("load", function () {
 	    },
 	    filters: {},
 	    geographyConfig: {
+	    clickHandler: null,
 		dataUrl: null,
 		hideAntarctica: true,
 		hideHawaiiAndAlaska : false,
@@ -12791,8 +12792,15 @@ window.addEventListener("load", function () {
 		})
 		.style('left', ( position[0]) + "px");
 	    });
-
+	
 	    d3.select((self.svg._groups ? self.svg._groups[0][0] : self.svg[0][0]).parentNode).select('.datamaps-hoverover').style('display', 'block');
+	    element.on("click", null);
+	    element.on("click", function() {
+	    	if (options.clickHandler) {
+	    		var data = JSON.parse(element.attr('data-info'));
+	    		options.clickHandler(data, d);
+	    	}
+	    });
 	  };
 
 	  Datamap.prototype.addPlugin = function( name, pluginFn ) {
@@ -12860,3 +12868,4 @@ window.addEventListener("load", function () {
 	  }
 	})();
 });
+

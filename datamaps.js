@@ -64,6 +64,14 @@ window.addEventListener("load", function () {
 				var data = {};
 				var self = this;
 				
+				var maximum = null;
+				if (self.cell.state.amountField) {
+					maximum = this.records.reduce(function(max, x) {
+						var amount = self.$services.page.getValue(x, self.cell.state.amountField);
+						return amount != null && (max == null || amount > max) ? amount : max;
+					}, null);
+				}
+				
 				var popupTemplate = function(bubble) {
 					return function(geo, data) {
 						var keys = {};
@@ -93,7 +101,20 @@ window.addEventListener("load", function () {
 							if (self.cell.state.countryFillField) {
 								var fill = self.$services.page.getValue(record, self.cell.state.countryFillField);
 								if (fill) {
-									record.fillKey = fill;
+									data[code].fillKey = fill;
+								}
+							}
+							else if (self.cell.state.amountField && maximum != null && self.cell.state.fills) {
+								var amount = self.$services.page.getValue(record, self.cell.state.amountField);
+								if (amount != null) {
+									var percent = (amount / maximum) * 100;
+									var lowestMatch = Number.MAX_VALUE;
+									self.cell.state.fills.forEach(function(x) {
+										if (x.maxPercent && percent < parseFloat(x.maxPercent) && parseFloat(x.maxPercent) < lowestMatch) {
+											data[code].fillKey = x.name;
+											lowestMatch = parseFloat(x.maxPercent);
+										}
+									});
 								}
 							}
 						}
@@ -118,6 +139,9 @@ window.addEventListener("load", function () {
 					fills: fills,
 					data: data,
 					geographyConfig: {
+						clickHandler: function(data, geo) {
+							self.select(data);
+						},
 						popupTemplate: popupTemplate(false)
 					}
 				});
@@ -185,6 +209,7 @@ window.addEventListener("load", function () {
 		}
 	});
 });
+
 
 
 
